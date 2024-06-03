@@ -1,21 +1,27 @@
 import java.sql.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.io.*;
+import java.util.Scanner;
 
-public class SQLInjectionServlet extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userId = request.getParameter("id");
+public class SQLInjectionExample {
+    public static void main(String[] args) {
+        // Crear un scanner para leer la entrada del usuario desde la consola
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter user ID: ");
+        String userId = scanner.nextLine();
+
+        // Conectar a la base de datos SQLite y ejecutar la consulta
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:example.db");
              Statement stmt = conn.createStatement()) {
             String query = "SELECT * FROM users WHERE id = " + userId;
             ResultSet rs = stmt.executeQuery(query);
-            PrintWriter out = response.getWriter();
+
+            // Imprimir los resultados
             while (rs.next()) {
-                out.println("User: " + rs.getString("name") + ", Email: " + rs.getString("email"));
+                System.out.println("User: " + rs.getString("name") + ", Email: " + rs.getString("email"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            scanner.close();
         }
     }
 }

@@ -1,6 +1,7 @@
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
+import java.util.Scanner;
 
 public class HardcodedKeyEncryption {
     private static final String KEY = "hardcodedkey1234"; // 16-byte key (insecure)
@@ -21,11 +22,22 @@ public class HardcodedKeyEncryption {
         return new String(decrypted);
     }
 
-    public static void main(String[] args) throws Exception {
-        String data = "Sensitive Data";
-        String encryptedData = encrypt(data);
-        System.out.println("Encrypted: " + encryptedData);
-        String decryptedData = decrypt(encryptedData);
-        System.out.println("Decrypted: " + decryptedData);
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter data to encrypt: ");
+        String data = scanner.nextLine();
+
+        try {
+            String encryptedData = encrypt(data);
+            System.out.println("Encrypted: " + encryptedData);
+
+            String decryptedData = decrypt(encryptedData);
+            System.out.println("Decrypted: " + decryptedData);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            scanner.close();
+        }
     }
 }

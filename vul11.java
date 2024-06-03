@@ -1,12 +1,14 @@
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.io.*;
 import java.util.Random;
 
-public class InsecureRandomnessServlet extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+public class InsecureRandomnessExample {
+    public static void main(String[] args) {
+        // Crear una instancia de Random
         Random random = new Random();
+        
+        // Generar un token aleatorio
         int token = random.nextInt(999999);
-        response.getWriter().println("Your security token is: " + token);
+        
+        // Mostrar el token en la consola
+        System.out.println("Your security token is: " + token);
     }
 }
